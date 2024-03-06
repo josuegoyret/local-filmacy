@@ -11,12 +11,20 @@
         Trash
       </RouterLink>
     </div>
-    <icon-upload />
+    <div class="flex gap-2">
+      <icon-upload />
+      <icon-trash v-if="isTrash" />
+    </div>
   </nav>
   <RouterView />
 </template>
 
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { computed } from 'vue'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
 import IconUpload from '@/components/icons/IconUpload.vue'
+import IconTrash from '@/components/icons/IconTrash.vue'
+
+const router = useRouter()
+const isTrash = computed(() => router.currentRoute.value.name === 'trash')
 </script>
