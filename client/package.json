@@ -1,5 +1,5 @@
 {
-  "name": "local-filmacy",
+  "name": "local-filmacy-client",
   "version": "0.0.0",
   "private": true,
   "type": "module",
