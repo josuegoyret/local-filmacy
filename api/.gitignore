@@ -28,3 +28,6 @@ coverage
 # Thumbnails and videos uploaded
 uploads/thumbnails/*
 uploads/videos/*
+
+# Local SQLite3 db
+db.sqlite
