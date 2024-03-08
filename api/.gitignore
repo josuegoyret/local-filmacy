@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 coverage
 *.local
+.env
 
 # Editor directories and files
 .vscode/*
@@ -23,3 +24,7 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# Thumbnails and videos uploaded
+uploads/thumbnails/*
+uploads/videos/*
