@@ -12,7 +12,14 @@
       </RouterLink>
     </div>
     <div class="flex gap-2">
-      <icon-upload />
+      <icon-upload class="cursor-pointer" @click="triggerInputFile" />
+      <input
+        type="file"
+        class="hidden"
+        ref="inputFile"
+        accept=".mp4, .mov"
+        @change="changeInputFile"
+      />
       <icon-trash v-if="isTrash" />
     </div>
   </nav>
@@ -20,11 +27,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { useVideosStore } from './stores/videos'
 import IconUpload from '@/components/icons/IconUpload.vue'
 import IconTrash from '@/components/icons/IconTrash.vue'
 
 const router = useRouter()
+const inputFile = ref<HTMLInputElement | null>(null)
+const { uploadVideo } = useVideosStore()
+
 const isTrash = computed(() => router.currentRoute.value.name === 'trash')
+
+const triggerInputFile = () => inputFile.value?.click()
+const changeInputFile = (e: Event) => {
+  const file = (e.target as HTMLInputElement).files?.[0]
+  file && uploadVideo(file)
+}
 </script>
