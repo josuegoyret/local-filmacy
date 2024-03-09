@@ -3,9 +3,14 @@ const cors = require("cors");
 const multer = require("multer");
 const dotenv = require("dotenv");
 const ffmpeg = require("fluent-ffmpeg");
-const { addVideo } = require("./db");
+const {
+  addVideo,
+  getAllFiles,
+  getAllVideos,
+  getFavoriteVideos,
+  getDeletedVideos,
+} = require("./db");
 const { getVideoDurationInSeconds } = require("get-video-duration");
-const { execSync } = require("child_process");
 
 dotenv.config();
 
@@ -61,6 +66,47 @@ app.post("/upload-video", upload.single("videofile"), async (req, res) => {
     return res
       .status(error.status || 500)
       .send({ message: error.message || "Error while uploading video" });
+  }
+});
+app.get("/get-all-videos", (_req, res) => {
+  try {
+    const videos = getAllVideos();
+    return res.status(200).send({
+      message: "Successfully retrieved all videos",
+      videos,
+    });
+  } catch (error) {
+    return res
+      .status(error.status || 500)
+      .send({ message: error.message || "Error while getting all videos" });
+  }
+});
+app.get("/get-favorite-videos", (_req, res) => {
+  try {
+    const videos = getFavoriteVideos();
+    return res.status(200).send({
+      message: "Successfully retrieved favorite videos",
+      videos,
+    });
+  } catch (error) {
+    return res
+      .status(error.status || 500)
+      .send({
+        message: error.message || "Error while getting favorite videos",
+      });
+  }
+});
+app.get("/get-deleted-videos", (_req, res) => {
+  try {
+    const videos = getDeletedVideos();
+    return res.status(200).send({
+      message: "Successfully retrieved deleted videos",
+      videos,
+    });
+  } catch (error) {
+    return res
+      .status(error.status || 500)
+      .send({ message: error.message || "Error while getting deleted videos" });
   }
 });
 

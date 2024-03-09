@@ -5,6 +5,7 @@ const DB_SOURCE = "db.sqlite";
 const db = new sqlite3(DB_SOURCE);
 
 try {
+  // booleans isFavorite and isDeleted use 0 and 1 for false and true respectively for simplicity purposes
   db.prepare(
     `CREATE TABLE IF NOT EXISTS videofile (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,7 +30,24 @@ const addVideo = (filename, duration) => {
   return info.changes;
 };
 
+const getAllVideos = () => {
+  return db
+    .prepare(`SELECT * FROM videofile WHERE isFavorite = 0 AND isDeleted = 0`)
+    .all();
+};
+
+const getFavoriteVideos = () => {
+  return db.prepare(`SELECT * FROM videofile WHERE isFavorite = 1`).all();
+};
+
+const getDeletedVideos = () => {
+  return db.prepare(`SELECT * FROM videofile WHERE isDeleted = 1`).all();
+};
+
 module.exports = {
   db,
   addVideo,
+  getAllVideos,
+  getFavoriteVideos,
+  getDeletedVideos,
 };
