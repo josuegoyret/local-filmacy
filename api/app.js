@@ -38,6 +38,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json({ limit: "50mb" }));
 
+app.use("/uploads", express.static("uploads"));
+
 const uploadThumbnail = (originalname) => {
   ffmpeg(`./uploads/videos/${originalname}`)
     .screenshots({
@@ -89,11 +91,9 @@ app.get("/get-favorite-videos", (_req, res) => {
       videos,
     });
   } catch (error) {
-    return res
-      .status(error.status || 500)
-      .send({
-        message: error.message || "Error while getting favorite videos",
-      });
+    return res.status(error.status || 500).send({
+      message: error.message || "Error while getting favorite videos",
+    });
   }
 });
 app.get("/get-deleted-videos", (_req, res) => {
