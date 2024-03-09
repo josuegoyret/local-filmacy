@@ -15,3 +15,7 @@ export interface GetVideosData {
   message: string
   videos: Video[]
 }
+
+export interface VideoCardProps {
+  video: Video
+}
