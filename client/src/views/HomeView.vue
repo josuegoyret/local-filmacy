@@ -1,12 +1,21 @@
 <template>
   <main class="p-4">
-    <h1 class="flex gap-2 items-center">
-      Home
-      <icon-home />
-    </h1>
+    <h1 class="flex gap-2 items-center">Home</h1>
+    <div class="flex flex-col md:flex-wrap md:flex-row gap-10">
+      <video-card v-for="video in videosStore.allVideos" :video="video" :key="video.id" />
+    </div>
   </main>
 </template>
 
 <script setup lang="ts">
-import IconHome from '@/components/icons/IconHome.vue'
+import { onMounted } from 'vue'
+import { useVideosStore } from '@/stores/videos'
+import VideoCard from '@/components/VideoCard.vue'
+
+const videosStore = useVideosStore()
+console.log({ videos: videosStore.allVideos })
+
+onMounted(() => {
+  videosStore.getAllVideos()
+})
 </script>
