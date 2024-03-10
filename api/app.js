@@ -3,9 +3,9 @@ const cors = require("cors");
 const multer = require("multer");
 const dotenv = require("dotenv");
 const ffmpeg = require("fluent-ffmpeg");
+const fs = require("fs");
 const {
   addVideo,
-  getAllFiles,
   getAllVideos,
   getFavoriteVideos,
   getDeletedVideos,
@@ -107,6 +107,40 @@ app.get("/get-deleted-videos", (_req, res) => {
     return res
       .status(error.status || 500)
       .send({ message: error.message || "Error while getting deleted videos" });
+  }
+});
+app.get("/video", (req, res) => {
+  // stream video
+  // respond with the file size, and then send chunks of the video
+  const video = req.query.id;
+  const path = `uploads/videos/${video}`;
+  const stat = fs.statSync(path);
+  const fileSize = stat.size;
+  const range = req.headers.range;
+  if (range) {
+    const parts = range.replace(/bytes=/, "").split("-"); // Range: "bytes=100-200" --> structure of Range header
+    const start = parseInt(parts[0], 10);
+    const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+    const chunkSize = end - start + 1;
+    const file = fs.createReadStream(path, {
+      start,
+      end,
+    });
+    const head = {
+      "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+      "Accept-Ranges": "bytes",
+      "Content-Length": chunkSize,
+      "Content-Type": "video/mp4",
+    };
+    res.writeHead(206, head);
+    file.pipe(res);
+  } else {
+    const head = {
+      "Content-Length": fileSize,
+      "Content-Type": "video/mp4",
+    };
+    res.writeHead(200, head);
+    fs.createReadStream(path).pipe(res);
   }
 });
 
