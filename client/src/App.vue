@@ -1,30 +1,32 @@
 <template>
-  <nav class="flex justify-between items-center md:p-4">
-    <div class="flex gap-3 bg-gray-50 text-gray-800">
-      <RouterLink class="p-2" active-class="border-b-8 border-pastel-green-200" to="/">
-        Home
-      </RouterLink>
-      <RouterLink class="p-2" active-class="border-b-8 border-pastel-green-200" to="/favorites">
-        Favorites
-      </RouterLink>
-      <RouterLink class="p-2" active-class="border-b-8 border-pastel-green-200" to="/trash">
-        Trash
-      </RouterLink>
-    </div>
-    <div class="flex gap-2">
-      <icon-upload class="cursor-pointer" @click="triggerInputFile" />
-      <input
-        type="file"
-        class="hidden"
-        ref="inputFile"
-        accept=".mp4, .mov"
-        @change="changeInputFile"
-      />
-      <icon-trash v-if="isTrash" />
-    </div>
-  </nav>
-  <video-player v-if="videosStore.isVideoPlayerVisible" />
-  <RouterView />
+  <main class="bg-neutral-dark-500">
+    <nav class="flex justify-between items-center md:p-4">
+      <div class="flex gap-3 bg-gray-50 text-gray-800">
+        <RouterLink class="p-2" active-class="border-b-8 border-primary-500" to="/">
+          Home
+        </RouterLink>
+        <RouterLink class="p-2" active-class="border-b-8 border-primary-500" to="/favorites">
+          Favorites
+        </RouterLink>
+        <RouterLink class="p-2" active-class="border-b-8 border-primary-500" to="/trash">
+          Trash
+        </RouterLink>
+      </div>
+      <div class="flex gap-2">
+        <icon-upload class="cursor-pointer" @click="triggerInputFile" />
+        <input
+          type="file"
+          class="hidden"
+          ref="inputFile"
+          accept=".mp4, .mov"
+          @change="changeInputFile"
+        />
+        <icon-trash v-if="isTrash" />
+      </div>
+    </nav>
+    <video-player v-if="videosStore.isVideoPlayerVisible" />
+    <RouterView />
+  </main>
 </template>
 
 <script setup lang="ts">
