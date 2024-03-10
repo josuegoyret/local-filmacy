@@ -42,8 +42,11 @@ const videosStore = useVideosStore()
 const isTrash = computed(() => router.currentRoute.value.name === 'trash')
 
 const triggerInputFile = () => inputFile.value?.click()
-const changeInputFile = (e: Event) => {
+const changeInputFile = async (e: Event) => {
   const file = (e.target as HTMLInputElement).files?.[0]
-  file && videosStore.uploadVideo(file)
+  if (file) {
+    await videosStore.uploadVideo(file)
+    await videosStore.getAllVideos()
+  }
 }
 </script>
