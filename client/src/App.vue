@@ -23,6 +23,7 @@
       <icon-trash v-if="isTrash" />
     </div>
   </nav>
+  <video-player v-if="videosStore.isVideoPlayerVisible" />
   <RouterView />
 </template>
 
@@ -30,18 +31,19 @@
 import { computed, ref } from 'vue'
 import { RouterLink, RouterView, useRouter } from 'vue-router'
 import { useVideosStore } from './stores/videos'
+import VideoPlayer from './components/VideoPlayer.vue'
 import IconUpload from '@/components/icons/IconUpload.vue'
 import IconTrash from '@/components/icons/IconTrash.vue'
 
 const router = useRouter()
 const inputFile = ref<HTMLInputElement | null>(null)
-const { uploadVideo } = useVideosStore()
+const videosStore = useVideosStore()
 
 const isTrash = computed(() => router.currentRoute.value.name === 'trash')
 
 const triggerInputFile = () => inputFile.value?.click()
 const changeInputFile = (e: Event) => {
   const file = (e.target as HTMLInputElement).files?.[0]
-  file && uploadVideo(file)
+  file && videosStore.uploadVideo(file)
 }
 </script>

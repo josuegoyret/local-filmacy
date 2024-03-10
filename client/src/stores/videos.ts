@@ -12,6 +12,8 @@ export const useVideosStore = defineStore('videos', () => {
   const allVideos: Ref<Video[]> = ref([])
   const favoriteVideos: Ref<Video[]> = ref([])
   const deletedVideos: Ref<Video[]> = ref([])
+  const isVideoPlayerVisible: Ref<boolean> = ref(false)
+  const selectedVideo: Ref<string | undefined> = ref(undefined)
 
   const uploadVideo = async (file: File) => {
     const data = await uploadVideoToServer(file)
@@ -40,6 +42,8 @@ export const useVideosStore = defineStore('videos', () => {
     getDeletedVideos,
     allVideos,
     favoriteVideos,
-    deletedVideos
+    deletedVideos,
+    isVideoPlayerVisible,
+    selectedVideo
   }
 })

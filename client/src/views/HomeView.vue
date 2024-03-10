@@ -13,7 +13,6 @@ import { useVideosStore } from '@/stores/videos'
 import VideoCard from '@/components/VideoCard.vue'
 
 const videosStore = useVideosStore()
-console.log({ videos: videosStore.allVideos })
 
 onMounted(() => {
   videosStore.getAllVideos()
