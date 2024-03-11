@@ -20,12 +20,16 @@
 </template>
 
 <script setup lang="ts">
-import type { VideoCardProps } from '@/common/types'
+import type { Video } from '@/common/types'
 import IconFav from './icons/IconFav.vue'
 import IconTrash from './icons/IconTrash.vue'
 import { computed } from 'vue'
 import { getThumbnailURL } from '@/utils/videos.util'
 import { useVideosStore } from '@/stores/videos'
+
+interface VideoCardProps {
+  video: Video
+}
 
 const videosStore = useVideosStore()
 

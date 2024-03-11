@@ -1,54 +1,18 @@
 <template>
-  <main class="bg-neutral-dark-500">
-    <nav class="flex justify-between items-center md:p-4">
-      <div class="flex gap-3 bg-gray-50 text-gray-800">
-        <RouterLink class="p-2" active-class="border-b-8 border-primary-500" to="/">
-          Home
-        </RouterLink>
-        <RouterLink class="p-2" active-class="border-b-8 border-primary-500" to="/favorites">
-          Favorites
-        </RouterLink>
-        <RouterLink class="p-2" active-class="border-b-8 border-primary-500" to="/trash">
-          Trash
-        </RouterLink>
-      </div>
-      <div class="flex gap-2">
-        <icon-upload class="cursor-pointer" @click="triggerInputFile" />
-        <input
-          type="file"
-          class="hidden"
-          ref="inputFile"
-          accept=".mp4, .mov"
-          @change="changeInputFile"
-        />
-        <icon-trash v-if="isTrash" />
-      </div>
-    </nav>
-    <video-player v-if="videosStore.isVideoPlayerVisible" />
-    <RouterView />
+  <main class="bg-neutral-dark-500 min-h-screen text-body-500 font-body">
+    <div class="max-w-6xl mx-auto px-4 md:px-10">
+      <TopBar />
+      <video-player v-if="videosStore.isVideoPlayerVisible" />
+      <RouterView />
+    </div>
   </main>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { RouterView } from 'vue-router'
 import { useVideosStore } from './stores/videos'
 import VideoPlayer from './components/VideoPlayer.vue'
-import IconUpload from '@/components/icons/IconUpload.vue'
-import IconTrash from '@/components/icons/IconTrash.vue'
+import TopBar from './components/TopBar.vue'
 
-const router = useRouter()
-const inputFile = ref<HTMLInputElement | null>(null)
 const videosStore = useVideosStore()
-
-const isTrash = computed(() => router.currentRoute.value.name === 'trash')
-
-const triggerInputFile = () => inputFile.value?.click()
-const changeInputFile = async (e: Event) => {
-  const file = (e.target as HTMLInputElement).files?.[0]
-  if (file) {
-    await videosStore.uploadVideo(file)
-    await videosStore.getAllVideos()
-  }
-}
 </script>
