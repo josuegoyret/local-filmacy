@@ -1,5 +1,5 @@
 <template>
-  <main class="p-4">
+  <main>
     <h1 class="flex gap-2 items-center">
       Trash
       <icon-trash />

@@ -5,5 +5,5 @@
 
 <script setup lang="ts">
 import FilmacyLogo from './FilmacyLogo.vue'
-import IconFilm from './icons/IconFilm.vue'
+import IconFilm from '../icons/IconFilm.vue'
 </script>

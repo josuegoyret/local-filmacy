@@ -6,5 +6,5 @@
 </template>
 
 <script setup lang="ts">
-import IconFilm from './icons/IconFilm.vue'
+import IconFilm from '../icons/IconFilm.vue'
 </script>

@@ -5,13 +5,17 @@ export default {
     extend: {
       colors: {
         ['primary']: {
-          500: '#4b2fa4' // pruple dark
+          400: '#5f3fb8',
+          500: '#4b2fa4', // pruple dark
+          600: '#412594'
         },
         ['secondary']: {
           500: '#c18fff' // pruple light
         },
         ['tertiary']: {
-          500: '#33a9ff' // blue light
+          400: '#66bfff',
+          500: '#33a9ff', // blue light
+          600: '#1a8fe6'
         },
         ['neutral-dark']: {
           500: '#090b0e' // shaded dark blue
