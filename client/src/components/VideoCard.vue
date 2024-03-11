@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full md:w-64 md:h-80 mb-2 rounded-md relative shadow-md shadow-black/60">
+  <div class="flex w-full aspect-video md:aspect-2/3 rounded-md relative shadow-md shadow-black/60">
     <div class="absolute w-full h-full bg-gradient-to-t from-black/10 to-white/10 rounded-md">
       <img
         :src="thumbnailURL"

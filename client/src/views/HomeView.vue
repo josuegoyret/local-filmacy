@@ -1,18 +1,15 @@
 <template>
-  <main>
+  <main class="pb-32">
     <HomeHero />
-    <h1 class="flex gap-2 items-center">Home</h1>
-    <div class="flex flex-col md:flex-wrap md:flex-row gap-10">
-      <video-card v-for="video in videosStore.allVideos" :video="video" :key="video.id" />
-    </div>
+    <HomeContent :all-videos="videosStore.allVideos" />
   </main>
 </template>
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useVideosStore } from '@/stores/videos'
-import VideoCard from '@/components/VideoCard.vue'
 import HomeHero from '@/components/ui/HomeHero.vue'
+import HomeContent from '@/components/ui/HomeContent.vue'
 
 const videosStore = useVideosStore()
 

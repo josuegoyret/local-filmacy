@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-neutral-dark-500 min-h-screen text-body-500 font-body">
+  <main class="bg-neutral-darker-500 min-h-screen text-body-500 font-body">
     <div class="max-w-6xl mx-auto px-4 md:px-10">
       <TopBar />
       <VideoPlayer v-if="videosStore.isVideoPlayerVisible" />
