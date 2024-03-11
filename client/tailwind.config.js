@@ -19,10 +19,10 @@ export default {
         ['neutral-light']: {
           500: '#111316' // dark gray and blue
         },
-        ['text-display']: {
+        ['display']: {
           500: '#EEEEEE' // almost white
         },
-        ['text-body']: {
+        ['body']: {
           500: '#A1A1A1' // medium gray
         }
       },
