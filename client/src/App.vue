@@ -5,6 +5,7 @@
       <VideoPlayer v-if="videosStore.isVideoPlayerVisible" />
       <RouterView />
     </div>
+    <FooterSection />
   </main>
 </template>
 
@@ -13,6 +14,7 @@ import { RouterView } from 'vue-router'
 import { useVideosStore } from './stores/videos'
 import VideoPlayer from './components/VideoPlayer.vue'
 import TopBar from './components/TopBar.vue'
+import FooterSection from './components/ui/FooterSection.vue'
 
 const videosStore = useVideosStore()
 </script>
