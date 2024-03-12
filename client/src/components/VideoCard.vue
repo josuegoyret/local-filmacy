@@ -13,12 +13,18 @@
       <div class="w-full flex justify-between items-center p-4 absolute z-20 bottom-0">
         <p class="text-sm text-display-500">{{ props.video.filename }}</p>
         <div class="flex gap-2 items-center">
+          <IconFavSolid
+            v-if="props.video.isFavorite"
+            @click="switchFav"
+            class="cursor-pointer hover:scale-105 transition-transform hover:text-display-500"
+          />
           <IconFav
-            @click="favVideo"
+            v-else
+            @click="switchFav"
             class="cursor-pointer hover:scale-105 transition-transform hover:text-display-500"
           />
           <IconTrash
-            @click="deleteVideo"
+            @click="switchDel"
             class="cursor-pointer hover:scale-105 transition-transform hover:text-display-500"
           />
         </div>
@@ -32,9 +38,11 @@ import type { Video } from '@/common/types'
 import { computed } from 'vue'
 import { getThumbnailURL } from '@/utils/videos.util'
 import { useVideosStore } from '@/stores/videos'
+import { useRouter } from 'vue-router'
 import IconFav from './icons/IconFav.vue'
 import IconPlay from './icons/IconPlay.vue'
 import IconTrash from './icons/IconTrash.vue'
+import IconFavSolid from './icons/IconFavSolid.vue'
 
 interface VideoCardProps {
   video: Video
@@ -48,10 +56,27 @@ const playVideo = () => {
   videosStore.selectedVideo = props.video.filename
   videosStore.isVideoPlayerVisible = true
 }
-const favVideo = () => {
-  console.log('fav video')
+
+const router = useRouter()
+
+const currentRoute = computed(() => router.currentRoute.value.name)
+
+const reloadVideos = async () => {
+  switch (currentRoute.value) {
+    case 'favorites':
+      return await videosStore.getFavoriteVideos()
+    case 'trash':
+      return await videosStore.getDeletedVideos()
+    default:
+      return await videosStore.getAllVideos()
+  }
 }
-const deleteVideo = () => {
-  console.log('delete video')
+const switchFav = async () => {
+  await videosStore.switchFavoriteVideo(props.video.id)
+  await reloadVideos()
+}
+const switchDel = async () => {
+  await videosStore.switchDeleteVideo(props.video.id)
+  await reloadVideos()
 }
 </script>

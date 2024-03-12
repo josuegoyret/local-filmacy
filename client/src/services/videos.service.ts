@@ -14,6 +14,16 @@ export const uploadVideoToServer = async (file: File): Promise<UploadVideoData> 
   return response.data
 }
 
+export const switchDeleteVideoInServer = async (id: number): Promise<void> => {
+  const response = await axios.put(`${API_URL}/switch-delete-video`, { id })
+  return response.data
+}
+
+export const switchFavotireVideoInServer = async (id: number): Promise<void> => {
+  const response = await axios.put(`${API_URL}/switch-favorite-video`, { id })
+  return response.data
+}
+
 export const getAllVideosFromServer = async (): Promise<GetVideosData> => {
   const response = await axios.get(`${API_URL}/get-all-videos`)
   return response.data

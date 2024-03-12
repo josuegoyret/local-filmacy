@@ -4,6 +4,8 @@ import {
   getAllVideosFromServer,
   getDeletedVideosFromServer,
   getFavoriteVideosFromServer,
+  switchDeleteVideoInServer,
+  switchFavotireVideoInServer,
   uploadVideoToServer
 } from '@/services/videos.service'
 import { ref, type Ref } from 'vue'
@@ -16,8 +18,15 @@ export const useVideosStore = defineStore('videos', () => {
   const selectedVideo: Ref<string | undefined> = ref(undefined)
 
   const uploadVideo = async (file: File) => {
-    const data = await uploadVideoToServer(file)
-    console.log({ data })
+    await uploadVideoToServer(file)
+  }
+
+  const switchFavoriteVideo = async (id: number) => {
+    await switchFavotireVideoInServer(id)
+  }
+
+  const switchDeleteVideo = async (id: number) => {
+    await switchDeleteVideoInServer(id)
   }
 
   const getAllVideos = async () => {
@@ -37,6 +46,8 @@ export const useVideosStore = defineStore('videos', () => {
 
   return {
     uploadVideo,
+    switchFavoriteVideo,
+    switchDeleteVideo,
     getAllVideos,
     getFavoriteVideos,
     getDeletedVideos,
