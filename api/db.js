@@ -30,14 +30,34 @@ const addVideo = (filename, duration) => {
   return info.changes;
 };
 
+const switchDeleteVideo = (id) => {
+  const isDeleted = db
+    .prepare(`SELECT isDeleted FROM videofile WHERE id = ?`)
+    .get(id).isDeleted;
+  const info = db
+    .prepare(`UPDATE videofile SET isDeleted = ?, isFavorite = 0 WHERE id = ?`)
+    .run(isDeleted ? 0 : 1, id);
+  return info.changes;
+};
+
+const switchFavVideo = (id) => {
+  const isFavorite = db
+    .prepare(`SELECT isFavorite FROM videofile WHERE id = ?`)
+    .get(id).isFavorite;
+  const info = db
+    .prepare(`UPDATE videofile SET isFavorite = ? WHERE id = ?`)
+    .run(isFavorite ? 0 : 1, id);
+  return info.changes;
+};
+
 const getAllVideos = () => {
-  return db
-    .prepare(`SELECT * FROM videofile WHERE isFavorite = 0 AND isDeleted = 0`)
-    .all();
+  return db.prepare(`SELECT * FROM videofile WHERE isDeleted = 0`).all();
 };
 
 const getFavoriteVideos = () => {
-  return db.prepare(`SELECT * FROM videofile WHERE isFavorite = 1`).all();
+  return db
+    .prepare(`SELECT * FROM videofile WHERE isFavorite = 1 AND isDeleted = 0`)
+    .all();
 };
 
 const getDeletedVideos = () => {
@@ -47,6 +67,8 @@ const getDeletedVideos = () => {
 module.exports = {
   db,
   addVideo,
+  switchFavVideo,
+  switchDeleteVideo,
   getAllVideos,
   getFavoriteVideos,
   getDeletedVideos,

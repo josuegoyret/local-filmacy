@@ -9,6 +9,8 @@ const {
   getAllVideos,
   getFavoriteVideos,
   getDeletedVideos,
+  switchDeleteVideo,
+  switchFavVideo,
 } = require("./db");
 const { getVideoDurationInSeconds } = require("get-video-duration");
 
@@ -68,6 +70,30 @@ app.post("/upload-video", upload.single("videofile"), async (req, res) => {
     return res
       .status(error.status || 500)
       .send({ message: error.message || "Error while uploading video" });
+  }
+});
+app.put("/switch-delete-video", async (req, res) => {
+  try {
+    switchDeleteVideo(req.body.id);
+    return res.status(200).send({
+      message: "Successfully switched delete video",
+    });
+  } catch (error) {
+    return res
+      .status(error.status || 500)
+      .send({ message: error.message || "Error while switching delete video" });
+  }
+});
+app.put("/switch-favorite-video", async (req, res) => {
+  try {
+    switchFavVideo(req.body.id);
+    return res.status(200).send({
+      message: "Successfully switched favorite video",
+    });
+  } catch (error) {
+    return res.status(error.status || 500).send({
+      message: error.message || "Error while switching favorite video",
+    });
   }
 });
 app.get("/get-all-videos", (_req, res) => {
