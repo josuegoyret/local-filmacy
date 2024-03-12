@@ -42,36 +42,43 @@ app.use(express.json({ limit: "50mb" }));
 
 app.use("/uploads", express.static("uploads"));
 
-const uploadThumbnail = (originalname) => {
-  ffmpeg(`./uploads/videos/${originalname}`)
+const uploadThumbnail = (req, res, next) => {
+  ffmpeg(`./uploads/videos/${req.file.originalname}`)
     .screenshots({
       count: 1,
       timemarks: ["00:00:03"],
       folder: "./uploads/thumbnails/",
-      filename: `${originalname.split(".")[0]}.jpg`,
+      filename: `${req.file.originalname.split(".")[0]}.jpg`,
     })
     .on("end", () => {
       console.log("Thumbnail generated");
+      next();
     })
-    .on("error", (err) => {
-      console.log(err);
+    .on("error", (error) => {
+      return res
+        .status(error.status || 500)
+        .send({ message: error.message || "Error while generating thumbnail" });
     });
 };
 
-app.post("/upload-video", upload.single("videofile"), async (req, res) => {
-  try {
-    uploadThumbnail(req.file.originalname);
-    await storeVideo(req.file.originalname);
-    return res.status(200).send({
-      message: "Successfully uploaded video",
-      video: req.file.originalname,
-    });
-  } catch (error) {
-    return res
-      .status(error.status || 500)
-      .send({ message: error.message || "Error while uploading video" });
+app.post(
+  "/upload-video",
+  upload.single("videofile"),
+  uploadThumbnail,
+  async (req, res) => {
+    try {
+      await storeVideo(req.file.originalname);
+      return res.status(200).send({
+        message: "Successfully uploaded video",
+        video: req.file.originalname,
+      });
+    } catch (error) {
+      return res
+        .status(error.status || 500)
+        .send({ message: error.message || "Error while uploading video" });
+    }
   }
-});
+);
 app.put("/switch-delete-video", async (req, res) => {
   try {
     switchDeleteVideo(req.body.id);
