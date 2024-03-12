@@ -10,7 +10,7 @@
         @click="playVideo"
         class="w-10 h-10 md:w-12 md:h-12 hover:scale-105 transition-transform text-display-500"
       />
-      <div class="w-full flex justify-between items-center p-4 absolute z-20 bottom-0">
+      <div class="w-full flex justify-between items-center p-4 absolute z-1 bottom-0">
         <p class="text-sm text-display-500">{{ props.video.filename }}</p>
         <div class="flex gap-2 items-center">
           <FavButton
