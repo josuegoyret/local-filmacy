@@ -13,17 +13,13 @@
       <div class="w-full flex justify-between items-center p-4 absolute z-20 bottom-0">
         <p class="text-sm text-display-500">{{ props.video.filename }}</p>
         <div class="flex gap-2 items-center">
-          <IconFavSolid
-            v-if="props.video.isFavorite"
-            @click="switchFav"
-            class="cursor-pointer hover:scale-105 transition-transform hover:text-display-500"
-          />
-          <IconFav
-            v-else
-            @click="switchFav"
-            class="cursor-pointer hover:scale-105 transition-transform hover:text-display-500"
+          <FavButton
+            v-if="props.icons?.fav"
+            :is-favorite="props.video.isFavorite"
+            :switch-fav="switchFav"
           />
           <IconTrash
+            v-if="props.icons?.del"
             @click="switchDel"
             class="cursor-pointer hover:scale-105 transition-transform hover:text-display-500"
           />
@@ -39,12 +35,15 @@ import { computed } from 'vue'
 import { getThumbnailURL } from '@/utils/videos.util'
 import { useVideosStore } from '@/stores/videos'
 import { useRouter } from 'vue-router'
-import IconFav from './icons/IconFav.vue'
 import IconPlay from './icons/IconPlay.vue'
 import IconTrash from './icons/IconTrash.vue'
-import IconFavSolid from './icons/IconFavSolid.vue'
+import FavButton from './ui/FavButton.vue'
 
 interface VideoCardProps {
+  icons?: {
+    fav?: boolean
+    del?: boolean
+  }
   video: Video
 }
 

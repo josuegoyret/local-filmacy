@@ -5,7 +5,12 @@
       v-if="videos.length"
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
     >
-      <VideoCard v-for="video in props.videos" :video="video" :key="video.id" />
+      <VideoCard
+        v-for="video in props.videos"
+        :video="video"
+        :icons="props.icons"
+        :key="video.id"
+      />
     </div>
     <div
       v-else
@@ -22,6 +27,10 @@ import VideoCard from '../VideoCard.vue'
 
 interface HomeContentProps {
   title: string
+  icons?: {
+    fav?: boolean
+    del?: boolean
+  }
   videos: Video[]
 }
 const props = defineProps<HomeContentProps>()
