@@ -1,12 +1,18 @@
 <template>
-  <main>
-    <h1 class="flex gap-2 items-center">
-      Favorites
-      <icon-fav />
-    </h1>
+  <main class="pb-32">
+    <h1 class="text-display-500 text-7xl font-extrabold text-center py-32">Cherished Selections</h1>
+    <GridTitledSection :title="'My Favorites'" :videos="videosStore.favoriteVideos" />
   </main>
 </template>
 
 <script setup lang="ts">
-import IconFav from '@/components/icons/IconFav.vue'
+import GridTitledSection from '@/components/ui/GridTitledSection.vue'
+import { useVideosStore } from '@/stores/videos'
+import { onMounted } from 'vue'
+
+const videosStore = useVideosStore()
+
+onMounted(() => {
+  videosStore.getFavoriteVideos()
+})
 </script>
