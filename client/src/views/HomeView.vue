@@ -1,7 +1,7 @@
 <template>
   <main class="pb-32">
     <HomeHero />
-    <HomeContent :all-videos="videosStore.allVideos" />
+    <GridTitledSection :title="'My List'" :videos="videosStore.allVideos" />
   </main>
 </template>
 
@@ -9,7 +9,7 @@
 import { onMounted } from 'vue'
 import { useVideosStore } from '@/stores/videos'
 import HomeHero from '@/components/ui/HomeHero.vue'
-import HomeContent from '@/components/ui/HomeContent.vue'
+import GridTitledSection from '@/components/ui/GridTitledSection.vue'
 
 const videosStore = useVideosStore()
 

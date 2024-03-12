@@ -1,11 +1,11 @@
 <template>
-  <section class="flex flex-col gap-4">
-    <h2 class="text-display-500 text-xl font-bold">My List</h2>
+  <section class="flex flex-col gap-4 pb-12">
+    <h2 class="text-display-500 text-xl font-bold">{{ props.title }}</h2>
     <div
-      v-if="allVideos.length"
+      v-if="videos.length"
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
     >
-      <VideoCard v-for="video in props.allVideos" :video="video" :key="video.id" />
+      <VideoCard v-for="video in props.videos" :video="video" :key="video.id" />
     </div>
     <div
       v-else
@@ -21,7 +21,8 @@ import type { Video } from '@/common/types'
 import VideoCard from '../VideoCard.vue'
 
 interface HomeContentProps {
-  allVideos: Video[]
+  title: string
+  videos: Video[]
 }
 const props = defineProps<HomeContentProps>()
 </script>
