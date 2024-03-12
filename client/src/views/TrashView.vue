@@ -1,12 +1,18 @@
 <template>
-  <main>
-    <h1 class="flex gap-2 items-center">
-      Trash
-      <icon-trash />
-    </h1>
+  <main class="pb-32">
+    <h1 class="text-display-500 text-7xl font-extrabold text-center py-32">Discard Depot</h1>
+    <GridTitledSection :title="'Trashed Videos'" :videos="videosStore.deletedVideos" />
   </main>
 </template>
 
 <script setup lang="ts">
-import IconTrash from '@/components/icons/IconTrash.vue'
+import GridTitledSection from '@/components/ui/GridTitledSection.vue'
+import { useVideosStore } from '@/stores/videos'
+import { onMounted } from 'vue'
+
+const videosStore = useVideosStore()
+
+onMounted(() => {
+  videosStore.getDeletedVideos()
+})
 </script>
